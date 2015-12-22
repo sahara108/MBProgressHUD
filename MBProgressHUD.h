@@ -316,6 +316,8 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 @property (copy) NSString *labelText;
 
+@property (nonatomic, assign) NSInteger labelPosition;
+
 /** 
  * An optional details message displayed below the labelText message. This message is displayed only if the labelText
  * property is also set and is different from an empty string (@""). The details text can span multiple lines. 

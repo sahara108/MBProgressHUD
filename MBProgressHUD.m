@@ -186,6 +186,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		self.minShowTime = 0.0f;
 		self.removeFromSuperViewOnHide = NO;
 		self.minSize = CGSizeZero;
+        self.labelPosition = 0;
 		self.square = NO;
 		self.contentMode = UIViewContentModeCenter;
 		self.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin
@@ -568,17 +569,27 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	indicatorF.origin.y = yPos;
 	indicatorF.origin.x = round((bounds.size.width - indicatorF.size.width) / 2) + xPos;
 	indicator.frame = indicatorF;
-	yPos += indicatorF.size.height;
+    if (self.labelPosition == 0) {
+        yPos += indicatorF.size.height;
+        
+        if (labelSize.height > 0.f && indicatorF.size.height > 0.f) {
+            yPos += kPadding;
+        }
+    }else if (self.labelPosition == 1) {
+        yPos -= 2 * kPadding;
+        yPos -= labelSize.height;
+    }
 	
-	if (labelSize.height > 0.f && indicatorF.size.height > 0.f) {
-		yPos += kPadding;
-	}
 	CGRect labelF;
 	labelF.origin.y = yPos;
 	labelF.origin.x = round((bounds.size.width - labelSize.width) / 2) + xPos;
 	labelF.size = labelSize;
 	label.frame = labelF;
 	yPos += labelF.size.height;
+    
+    if (self.labelPosition == 1) {
+        yPos = indicatorF.origin.y;
+    }
 	
 	if (detailsLabelSize.height > 0.f && (indicatorF.size.height > 0.f || labelSize.height > 0.f)) {
 		yPos += kPadding;
